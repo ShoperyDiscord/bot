@@ -1,14 +1,12 @@
 "use strict";
 require("dotenv/config");
-const { Client, Collection, Intents, MessageEmbed } = require("discord.js");
+const { Client, Collection, Intents } = require("discord.js");
 const fs = require("fs");
 require("./globals.js");
 
 // Define the client
-let intents = new Intents(Intents.NON_PRIVILEGED);
-intents.add("GUILD_MEMBERS");
 const client = new Client({
-  intents,
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGES],
   presence: {
     status: process.env.STATUS,
     activities: [
