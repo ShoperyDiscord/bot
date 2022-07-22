@@ -10,17 +10,28 @@ const Users = require("../models/users.js");
 const data = new SlashCommandBuilder()
   .setName("userinfo")
   .setDescription("Provides information about a you (or a user).")
-  .addSubcommand(sub => sub.setName("guild").setDescription("Pushes all commands to a specific server.").addStringOption(string => string.setName("guild").setRequired(true).setDescription("The ID of the server.")))
-  .addSubcommand(sub => sub.setName("global").setDescription("Pushes all commands to all servers."));
+  .addSubcommand((sub) =>
+    sub
+      .setName("guild")
+      .setDescription("Pushes all commands to a specific server.")
+      .addStringOption((string) =>
+        string
+          .setName("guild")
+          .setRequired(true)
+          .setDescription("The ID of the server.")
+      )
+  )
+  .addSubcommand((sub) =>
+    sub.setName("global").setDescription("Pushes all commands to all servers.")
+  );
 
 ////////////////////////
 // The function that will be called when a user executed this command //
 ////////////////////////
 async function executeCommand(interaction) {
-    await interaction.editReply({
-        content: "Loading...",
-    })
-
+  await interaction.editReply({
+    content: "Loading...",
+  });
 }
 
 module.exports = { data, executeCommand };

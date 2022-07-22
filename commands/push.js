@@ -9,8 +9,20 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const data = new SlashCommandBuilder()
   .setName("push")
   .setDescription("Pushes all commands to Discord.")
-  .addSubcommand(sub => sub.setName("guild").setDescription("Pushes all commands to a specific server.").addStringOption(string => string.setName("guild").setRequired(true).setDescription("The ID of the server.")))
-  .addSubcommand(sub => sub.setName("global").setDescription("Pushes all commands to all servers."));
+  .addSubcommand((sub) =>
+    sub
+      .setName("guild")
+      .setDescription("Pushes all commands to a specific server.")
+      .addStringOption((string) =>
+        string
+          .setName("guild")
+          .setRequired(true)
+          .setDescription("The ID of the server.")
+      )
+  )
+  .addSubcommand((sub) =>
+    sub.setName("global").setDescription("Pushes all commands to all servers.")
+  );
 
 ////////////////////////
 // The function that will be called when a user executed this command //
@@ -25,19 +37,32 @@ async function executeCommand(interaction) {
   const subcommand = interaction.options.getSubcommand();
   switch (subcommand) {
     case "guild":
-      if(await utils.discord.pushToGuild(interaction.options.getString("guild"))) return interaction.editReply({
-        embeds: embedReply("success", "Successfully pushed commands to that guild."),
-      });
-    break;
+      if (
+        await utils.discord.pushToGuild(interaction.options.getString("guild"))
+      )
+        return interaction.editReply({
+          embeds: embedReply(
+            "success",
+            "Successfully pushed commands to that guild."
+          ),
+        });
+      break;
     case "global":
-      if(await utils.discord.pushToGlobal()) return interaction.editReply({
-        embeds: embedReply("success", "Successfully pushed commands to all servers."),
-      });
-    break;
+      if (await utils.discord.pushToGlobal())
+        return interaction.editReply({
+          embeds: embedReply(
+            "success",
+            "Successfully pushed commands to all servers."
+          ),
+        });
+      break;
     default:
       return interaction.editReply({
-        embeds: embedReply("error", "Unknown subcommand. (this shouldnt happen, contact us at https://shopery.xyz/support"),
-      });      
+        embeds: embedReply(
+          "error",
+          "Unknown subcommand. (this shouldnt happen, contact us at https://shopery.xyz/support"
+        ),
+      });
   }
 }
 

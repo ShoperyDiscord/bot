@@ -6,7 +6,11 @@ require("./globals.js");
 
 // Define the client
 const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGES],
+  intents: [
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MEMBERS,
+    Intents.FLAGS.GUILD_MESSAGES,
+  ],
   presence: {
     status: process.env.STATUS,
     activities: [
